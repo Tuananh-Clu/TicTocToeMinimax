@@ -36,14 +36,14 @@ export const Game = () => {
   const isBoardFull = (board: (string | null)[]) => {
     return board.every((cell) => cell !== null);
   };
-  const minimax = (board: (string | null)[], isMaximizing: boolean): number => {
+  const minimax = (board: (string | null)[], isMaximizing: boolean,depth:number): number => {
     let score = 0;
     counter++;
     const winner = checkWinner(board);
     if (winner === "O") {
-      return 10;
+      return 10-depth;
     } else if (winner === "X") {
-      return -10;
+      return -10+depth;
     }
     if (isBoardFull(board)) {
       return 0;
@@ -53,7 +53,7 @@ export const Game = () => {
       for (let i = 0; i < board.length; i++) {
         if (board[i] === null) {
           board[i] = "O";
-          score = minimax(board, false);
+          score = minimax(board, false,depth+1);
           board[i] = null;
           bestScore = Math.max(score, bestScore);
         }
@@ -64,7 +64,7 @@ export const Game = () => {
       for (let i = 0; i < board.length; i++) {
         if (board[i] === null) {
           board[i] = "X";
-          score = minimax(board, true);
+          score = minimax(board, true,depth+1);
           board[i] = null;
           bestScore = Math.min(score, bestScore);
         }
@@ -79,7 +79,7 @@ export const Game = () => {
     for (let i = 0; i < board.length; i++) {
       if (board[i] === null) {
         board[i] = "O";
-        let score = minimax(board, false);
+        let score = minimax(board, false,0);
         board[i] = null;
         if (score > bestScore) {
           bestScore = score;
