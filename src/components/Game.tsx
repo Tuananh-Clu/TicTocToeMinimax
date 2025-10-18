@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Gamepad2, Users } from "lucide-react";
 import { Board } from "./Board";
-
+import { Gamepad2 } from "lucide-react";
+import { Users } from "lucide-react";
 export const Game = () => {
   const [board, setBoard] = useState<(number | null)[]>(Array(25).fill(0));
   const wsRef = useRef<WebSocket | null>(null);
